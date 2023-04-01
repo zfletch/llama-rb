@@ -1,21 +1,19 @@
-# frozen_string_literal: true
-
-require_relative "lib/llama/rb/version"
+require_relative "lib/llama"
 
 Gem::Specification.new do |spec|
   spec.name = "llama-rb"
-  spec.version = Llama::Rb::VERSION
+  spec.version = Llama::VERSION
   spec.authors = ["zfletch"]
   spec.email = ["zfletch2@gmail.com"]
 
   spec.summary = "Ruby interface for Llama"
-  spec.description = "Wrapper around ggerganov/llama.cpp with Ruby hooks"
+  spec.description = "ggerganov/llama.cpp with Ruby hooks"
   spec.homepage = "https://github.com/zfletch/llama-rb"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "https://github.com/zfletch/llama-rb"
-  spec.metadata["changelog_uri"] = "https://github.com/zfletch/llama-rb/releases"
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = "#{spec.homepage_uri}/releases"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
