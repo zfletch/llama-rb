@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "llama/rb"
 
 RSpec.configure do |config|
