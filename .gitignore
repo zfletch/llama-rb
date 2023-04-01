@@ -8,9 +8,15 @@
 /spec/reports/
 /tmp/
 
+# ext files
+/ext/**/Makefile
+/ext/**/*.o
+/ext/**/*.bundle
+/ext/**/*.log
+
 # rspec failure tracking
 .rspec_status
 
 # llama models
-models/*
-!models/.gitkeep
+/models/*
+!/models/.gitkeep
