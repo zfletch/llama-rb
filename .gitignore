@@ -1,3 +1,4 @@
+# ruby files
 /.bundle/
 /.yardoc
 /_yardoc/
@@ -9,3 +10,7 @@
 
 # rspec failure tracking
 .rspec_status
+
+# llama models
+models/*
+!models/.gitkeep
