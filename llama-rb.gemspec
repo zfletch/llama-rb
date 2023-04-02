@@ -18,11 +18,27 @@ Gem::Specification.new do |spec|
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0").reject do |f|
-      (f == __FILE__) || f.match(%r{\A(?:(?:bin|spec)/|\.(?:git|rspec|ruby|rubocop))})
-    end
-  end
+  spec.files = [
+    'Gemfile',
+    'Gemfile.lock',
+    'LICENSE',
+    'README.md',
+    'Rakefile',
+    'ext/llama/common.cpp',
+    'ext/llama/common.h',
+    'ext/llama/extconf.rb',
+    'ext/llama/ggml.c',
+    'ext/llama/ggml.h',
+    'ext/llama/llama.cpp',
+    'ext/llama/llama.h',
+    'ext/llama/model.cpp',
+    'lib/llama.rb',
+    'lib/llama/model.rb',
+    'lib/llama/version.rb',
+    'llama-rb.gemspec',
+    'llama.cpp',
+    'models/.gitkeep',
+  ]
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
