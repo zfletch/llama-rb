@@ -13,34 +13,51 @@
 #include <string>
 #include <vector>
 
+class CppSession
+{
+	public:
+		llama_context *ctx;
+		CppSession()
+		{
+			const char *model = (char *)"models/7B/ggml-model-q4_0.bin";
+
+			int32_t n_ctx   = 512;  // context size
+			int32_t n_parts = -1;   // amount of model parts (-1 = determine from model dimensions)
+			int32_t seed    = -1;   // RNG seed
+			bool memory_f16 = true;  // use f16 instead of f32 for memory kv
+			bool use_mlock  = false; // use mlock to keep model in memory
+
+
+			if (seed <= 0) {
+				seed = time(NULL);
+			}
+
+			auto lparams = llama_context_default_params();
+
+			lparams.n_ctx     = n_ctx;
+			lparams.n_parts   = n_parts;
+			lparams.seed      = seed;
+			lparams.f16_kv    = memory_f16;
+			lparams.use_mlock = use_mlock;
+
+			ctx = llama_init_from_file(model, lparams);
+		}
+		~CppSession()
+		{
+			llama_free(ctx);
+		}
+};
+
 Rice::Object session_test(Rice::Object /* self */, const char *prompt)
 {
 	std::string return_val = "";
 
     gpt_params params;
-    params.model = "models/7B/ggml-model-q4_0.bin"; // TODO: remove
 	params.prompt = prompt;
 
-    llama_context *ctx;
-
     // load the model
-    {
-        auto lparams = llama_context_default_params();
-
-        lparams.n_ctx      = params.n_ctx;
-        lparams.n_parts    = params.n_parts;
-        lparams.seed       = params.seed;
-        lparams.f16_kv     = params.memory_f16;
-        lparams.use_mlock  = params.use_mlock;
-
-        ctx = llama_init_from_file(params.model.c_str(), lparams);
-
-        if (ctx == NULL) {
-            fprintf(stderr, "%s: error: failed to load model '%s'\n", __func__, params.model.c_str());
-
-            return NULL;
-        }
-    }
+	CppSession session;
+	llama_context *ctx = session.ctx;
 
     // add a space in front of the first character to match OG llama tokenizer behavior
     params.prompt.insert(0, 1, ' ');
@@ -146,9 +163,6 @@ Rice::Object session_test(Rice::Object /* self */, const char *prompt)
             }
 		}
 	}
-
-	// free memory
-    llama_free(ctx);
 
 	Rice::String ruby_return_val(return_val);
 	return ruby_return_val;
