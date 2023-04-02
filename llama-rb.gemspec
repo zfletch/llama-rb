@@ -3,6 +3,7 @@ require_relative 'lib/llama'
 Gem::Specification.new do |spec|
   spec.name = 'llama-rb'
   spec.version = Llama::VERSION
+  spec.licenses = ['MIT']
   spec.authors = ['zfletch']
   spec.email = ['zfletch2@gmail.com']
 
@@ -19,7 +20,7 @@ Gem::Specification.new do |spec|
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
   spec.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0").reject do |f|
-      (f == __FILE__) || f.match(%r{\A(?:(?:bin|test|spec|features)/|\.(?:git|circleci)|appveyor)})
+      (f == __FILE__) || f.match(%r{\A(?:(?:bin|spec)/|\.(?:git|rspec|ruby|rubocop))})
     end
   end
   spec.bindir = 'exe'

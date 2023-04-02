@@ -1,6 +1,7 @@
 # ruby files
 /.bundle/
 /.yardoc
+/*.gem
 /_yardoc/
 /coverage/
 /doc/
@@ -13,6 +14,10 @@
 /ext/**/*.o
 /ext/**/*.bundle
 /ext/**/*.log
+/ext/**/*.cpp
+/ext/**/*.c
+/ext/**/*.h
+!/ext/llama/model.cpp
 
 # rspec failure tracking
 .rspec_status

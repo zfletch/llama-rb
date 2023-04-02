@@ -3,6 +3,11 @@ set -euo pipefail
 IFS=$'\n\t'
 set -vx
 
-bundle install
+cp llama.cpp/llama.cpp ext/llama/
+cp llama.cpp/llama.h ext/llama
+cp llama.cpp/ggml.c ext/llama
+cp llama.cpp/ggml.h ext/llama
+cp llama.cpp/examples/common.cpp ext/llama
+cp llama.cpp/examples/common.h ext/llama
 
-# Do any other automated setup that you need to do here
+bundle install
