@@ -21,6 +21,8 @@ module Llama
 
       capture_stderr { text = predict_cpp(prompt) }
 
+      text = text.force_encoding(Encoding.default_external)
+
       # remove the space that was added as a tokenizer hack in model.cpp
       text[0] = "" if text.size > 0
       text
