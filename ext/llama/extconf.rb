@@ -1,4 +1,4 @@
-require "mkmf-rice"
+require 'mkmf-rice'
 
 # Compile llama.cpp
 # root = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
@@ -9,4 +9,4 @@ require "mkmf-rice"
 # end
 
 # Create Makefile for Ruby bindings
-create_makefile "llama/model"
+create_makefile 'llama/model'

@@ -16,3 +16,9 @@ Layout/LineLength:
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
+
+Metrics/MethodLength:
+  Max: 15
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
