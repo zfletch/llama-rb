@@ -17,7 +17,13 @@ module Llama
     end
 
     def predict(prompt)
-      capture_stderr { predict_cpp(prompt) }
+      text = ""
+
+      capture_stderr { text = predict_cpp(prompt) }
+
+      # remove the space that was added as a tokenizer hack in model.cpp
+      text[0] = "" if text.size > 0
+      text
     end
 
     private
@@ -27,12 +33,11 @@ module Llama
     def capture_stderr
       previous = STDERR.dup
       tmp = Tempfile.open("llama-rb-stderr")
-      result = nil
 
       begin
         STDERR.reopen(tmp)
 
-        result = yield
+        yield
 
         tmp.rewind
         @stderr = tmp.read
@@ -40,8 +45,6 @@ module Llama
         tmp.close(true)
         STDERR.reopen(previous)
       end
-
-      result
     end
   end
 end
