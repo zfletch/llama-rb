@@ -29,7 +29,10 @@ class ModelCpp
 			const bool memory_f16,
 			const bool use_mlock
 		);
-		Rice::Object model_predict(const char *prompt);
+		Rice::Object model_predict(
+			const char *prompt,
+			const int32_t n_predict
+		);
 		~ModelCpp()
 		{
 
@@ -59,12 +62,16 @@ void ModelCpp::model_initialize(
 	ctx = llama_init_from_file(model, lparams);
 }
 
-Rice::Object ModelCpp::model_predict(const char *prompt)
+Rice::Object ModelCpp::model_predict(
+	const char *prompt,     // string used as prompt
+	const int32_t n_predict // number of tokens to predict
+)
 {
 	std::string return_val = "";
 
     gpt_params params;
 	params.prompt = prompt;
+	params.n_predict = n_predict;
 
     // add a space in front of the first character to match OG llama tokenizer behavior
     params.prompt.insert(0, 1, ' ');

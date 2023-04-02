@@ -40,10 +40,13 @@ module Llama
       instance
     end
 
-    def predict(prompt)
+    def predict(
+      prompt,        # string used as prompt
+      n_predict: 128 # number of tokens to predict
+    )
       text = ""
 
-      capture_stderr { text = predict_cpp(prompt) }
+      capture_stderr { text = predict_cpp(prompt, n_predict) }
 
       text = text.force_encoding(Encoding.default_external)
 
