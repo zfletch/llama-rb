@@ -76,6 +76,7 @@ module Llama
 
     def process_text(text)
       text = text.force_encoding(Encoding.default_external)
+
       # remove the space that was added as a tokenizer hack in model.cpp
       text[0] = '' if text.size.positive?
 
