@@ -39,7 +39,6 @@ class ModelCpp
 		}
 };
 
-
 void ModelCpp::model_initialize(
 	const char *model,     // path to model file, e.g. "models/7B/ggml-model-q4_0.bin"
 	const int32_t n_ctx,   // context size
@@ -104,9 +103,7 @@ Rice::Object ModelCpp::model_predict(const char *prompt)
 				}
 
 				if (llama_eval(ctx, embd.data(), embd.size(), n_past, params.n_threads)) {
-					fprintf(stderr, "%s : failed to eval\n", __func__);
-
-					return NULL;
+					throw Rice::Exception(rb_eRuntimeError, "Failed to eval");
 				}
 			}
 
