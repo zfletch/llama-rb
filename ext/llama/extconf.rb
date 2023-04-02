@@ -9,4 +9,4 @@ require "mkmf-rice"
 # end
 
 # Create Makefile for Ruby bindings
-create_makefile "llama/session"
+create_makefile "llama/model"

@@ -13,51 +13,58 @@
 #include <string>
 #include <vector>
 
-class CppSession
+class ModelCpp
 {
 	public:
 		llama_context *ctx;
-		CppSession()
+		ModelCpp()
 		{
-			const char *model = (char *)"models/7B/ggml-model-q4_0.bin";
-
-			int32_t n_ctx   = 512;  // context size
-			int32_t n_parts = -1;   // amount of model parts (-1 = determine from model dimensions)
-			int32_t seed    = -1;   // RNG seed
-			bool memory_f16 = true;  // use f16 instead of f32 for memory kv
-			bool use_mlock  = false; // use mlock to keep model in memory
-
-
-			if (seed <= 0) {
-				seed = time(NULL);
-			}
-
-			auto lparams = llama_context_default_params();
-
-			lparams.n_ctx     = n_ctx;
-			lparams.n_parts   = n_parts;
-			lparams.seed      = seed;
-			lparams.f16_kv    = memory_f16;
-			lparams.use_mlock = use_mlock;
-
-			ctx = llama_init_from_file(model, lparams);
+			ctx = NULL;
 		}
-		~CppSession()
+		void model_initialize(); 
+		Rice::Object model_predict(const char *prompt);
+		~ModelCpp()
 		{
-			llama_free(ctx);
+
+			if (ctx != NULL) {
+				llama_free(ctx);
+			}
 		}
 };
 
-Rice::Object session_test(Rice::Object /* self */, const char *prompt)
+
+void ModelCpp::model_initialize()
+{
+	const char *model = (char *)"models/7B/ggml-model-q4_0.bin";
+
+	int32_t n_ctx   = 512;  // context size
+	int32_t n_parts = -1;   // amount of model parts (-1 = determine from model dimensions)
+	int32_t seed    = -1;   // RNG seed
+	bool memory_f16 = true;  // use f16 instead of f32 for memory kv
+	bool use_mlock  = false; // use mlock to keep model in memory
+
+
+	if (seed <= 0) {
+		seed = time(NULL);
+	}
+
+	auto lparams = llama_context_default_params();
+
+	lparams.n_ctx     = n_ctx;
+	lparams.n_parts   = n_parts;
+	lparams.seed      = seed;
+	lparams.f16_kv    = memory_f16;
+	lparams.use_mlock = use_mlock;
+
+	ctx = llama_init_from_file(model, lparams);
+}
+
+Rice::Object ModelCpp::model_predict(const char *prompt)
 {
 	std::string return_val = "";
 
     gpt_params params;
 	params.prompt = prompt;
-
-    // load the model
-	CppSession session;
-	llama_context *ctx = session.ctx;
 
     // add a space in front of the first character to match OG llama tokenizer behavior
     params.prompt.insert(0, 1, ' ');
@@ -168,20 +175,13 @@ Rice::Object session_test(Rice::Object /* self */, const char *prompt)
 	return ruby_return_val;
 }
 
-Rice::Object session_hello(Rice::Object /* self */)
-{
-	Rice::String str("hello world");
-
-	return str;
-}
-
 extern "C"
-void Init_session()
+void Init_model()
 {
 	Rice::Module rb_mLlama = Rice::define_module("Llama");
-	Rice::Class rb_cSession =
-		define_class_under(rb_mLlama, "Session");
+	Rice::Data_Type<ModelCpp> rb_cModel =Rice::define_class_under<ModelCpp>(rb_mLlama, "Model");
 
-	rb_cSession.define_method("hello", &session_hello);
-	rb_cSession.define_method("test", &session_test);
+	rb_cModel.define_constructor(Rice::Constructor<ModelCpp>());
+	rb_cModel.define_method("initialize_cpp", &ModelCpp::model_initialize);
+	rb_cModel.define_method("predict_cpp", &ModelCpp::model_predict);
 }
