@@ -11,3 +11,8 @@ cp llama.cpp/examples/common.cpp ext/llama
 cp llama.cpp/examples/common.h ext/llama
 
 bundle install
+
+cd ext/llama
+ruby extconf.rb
+make clean
+make
