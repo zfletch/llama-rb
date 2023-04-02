@@ -8,11 +8,20 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
+    bundler-audit (0.9.1)
+      bundler (>= 1.2.0, < 3)
+      thor (~> 1.0)
     diff-lcs (1.5.0)
+    gnar-style (0.13.0)
+      rubocop (>= 1.0.0, < 2.0)
+      rubocop-performance
+      rubocop-rails (~> 2.2.0)
+      thor
     json (2.6.3)
     parallel (1.22.1)
     parser (3.2.2.0)
       ast (~> 2.4.1)
+    rack (3.0.7)
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.7.0)
@@ -43,17 +52,34 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.28.0)
       parser (>= 3.2.1.0)
+    rubocop-capybara (2.17.1)
+      rubocop (~> 1.41)
+    rubocop-performance (1.16.0)
+      rubocop (>= 1.7.0, < 2.0)
+      rubocop-ast (>= 0.4.0)
+    rubocop-rails (2.2.1)
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
+    rubocop-rake (0.6.0)
+      rubocop (~> 1.0)
+    rubocop-rspec (2.19.0)
+      rubocop (~> 1.33)
+      rubocop-capybara (~> 2.17)
     ruby-progressbar (1.13.0)
+    thor (1.2.1)
     unicode-display_width (2.4.2)
 
 PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  bundler-audit
+  gnar-style
   llama-rb!
-  rake (~> 13.0)
-  rspec (~> 3.0)
-  rubocop (~> 1.21)
+  rake
+  rspec
+  rubocop-rake
+  rubocop-rspec
 
 BUNDLED WITH
    2.4.5

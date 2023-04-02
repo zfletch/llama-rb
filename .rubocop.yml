@@ -1,13 +1,18 @@
+inherit_gem:
+  gnar-style:
+    - "rubocop/rubocop.yml"
+
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
-  TargetRubyVersion: 2.6
-
-Style/StringLiterals:
-  Enabled: true
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  Enabled: true
-  EnforcedStyle: double_quotes
+  NewCops: enable
+  TargetRubyVersion: 3.0
 
 Layout/LineLength:
   Max: 120
+  Severity: refactor
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
