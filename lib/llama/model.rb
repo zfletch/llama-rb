@@ -5,12 +5,36 @@ module Llama
     # move methods defined in `model.cpp` from public to private
     private :initialize_cpp, :predict_cpp
 
-    def self.new
+    def self.new(
+      model,               # path to model file, e.g. "models/7B/ggml-model-q4_0.bin"
+      n_ctx:  512,         # context size
+      n_parts: -1,         # amount of model parts (-1 = determine from model dimensions)
+      seed: Time.now.to_i, # RNG seed
+      memory_f16: true,    # use f16 instead of f32 for memory kv
+      use_mlock: false     # use mlock to keep model in memory
+    )
       instance = allocate
-      instance.send(:initialize)
 
-      instance.send(:capture_stderr) do
-        instance.send(:initialize_cpp)
+      instance.instance_eval do
+        initialize
+
+        @model = model
+        @n_ctx = n_ctx
+        @n_parts = n_parts
+        @seed = seed
+        @memory_f16 = memory_f16
+        @use_mlock = use_mlock
+
+        capture_stderr do
+          initialize_cpp(
+            model,
+            n_ctx,
+            n_parts,
+            seed,
+            memory_f16,
+            use_mlock
+          )
+        end
       end
 
       instance
@@ -28,9 +52,9 @@ module Llama
       text
     end
 
-    private
+    attr_reader :model, :n_ctx, :n_parts, :seed, :memory_f16, :use_mlock, :stderr
 
-    attr_reader :stderr
+    private
 
     def capture_stderr
       previous = STDERR.dup

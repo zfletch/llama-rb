@@ -21,7 +21,14 @@ class ModelCpp
 		{
 			ctx = NULL;
 		}
-		void model_initialize(); 
+		void model_initialize(
+			const char *model,
+			const int32_t n_ctx,
+			const int32_t n_parts,
+			const int32_t seed,
+			const bool memory_f16,
+			const bool use_mlock
+		);
 		Rice::Object model_predict(const char *prompt);
 		~ModelCpp()
 		{
@@ -33,21 +40,15 @@ class ModelCpp
 };
 
 
-void ModelCpp::model_initialize()
+void ModelCpp::model_initialize(
+	const char *model,     // path to model file, e.g. "models/7B/ggml-model-q4_0.bin"
+	const int32_t n_ctx,   // context size
+	const int32_t n_parts, // amount of model parts (-1 = determine from model dimensions)
+	const int32_t seed,    // RNG seed
+	const bool memory_f16, // use f16 instead of f32 for memory kv
+	const bool use_mlock   // use mlock to keep model in memory
+)
 {
-	const char *model = (char *)"models/7B/ggml-model-q4_0.bin";
-
-	int32_t n_ctx   = 512;  // context size
-	int32_t n_parts = -1;   // amount of model parts (-1 = determine from model dimensions)
-	int32_t seed    = -1;   // RNG seed
-	bool memory_f16 = true;  // use f16 instead of f32 for memory kv
-	bool use_mlock  = false; // use mlock to keep model in memory
-
-
-	if (seed <= 0) {
-		seed = time(NULL);
-	}
-
 	auto lparams = llama_context_default_params();
 
 	lparams.n_ctx     = n_ctx;
