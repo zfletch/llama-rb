@@ -5,5 +5,4 @@ set -vx
 
 bundle install
 
-cd ext/llama
-ruby extconf.rb
+ruby ext/extconf.rb

@@ -10,7 +10,7 @@
 /tmp/
 
 # ext files
-/ext/llama/llama
+/bin/llama
 
 # rspec failure tracking
 .rspec_status
