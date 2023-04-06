@@ -42,21 +42,15 @@ m.predict('hello world')
 ```ruby
 def self.new(
   model,               # path to model file, e.g. "models/7B/ggml-model-q4_0.bin"
-  n_ctx: 512,          # context size
-  n_parts: -1,         # amount of model parts (-1 = determine from model dimensions)
+  n_predict: 128       # number of tokens to predict
   seed: Time.now.to_i, # RNG seed
-  memory_f16: true,    # use f16 instead of f32 for memory kv
-  use_mlock: false     # use mlock to keep model in memory
 )
 ```
 
 #### Llama::Model#predict
 
 ```ruby
-def predict(
-  prompt,        # string used as prompt
-  n_predict: 128 # number of tokens to predict
-)
+def predict(prompt)
 ```
 
 ## Development
