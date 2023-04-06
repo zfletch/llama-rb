@@ -10,14 +10,7 @@
 /tmp/
 
 # ext files
-/ext/**/Makefile
-/ext/**/*.o
-/ext/**/*.bundle
-/ext/**/*.log
-/ext/**/*.cpp
-/ext/**/*.c
-/ext/**/*.h
-!/ext/llama/model.cpp
+/ext/llama/llama
 
 # rspec failure tracking
 .rspec_status

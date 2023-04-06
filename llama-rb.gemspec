@@ -24,14 +24,7 @@ Gem::Specification.new do |spec|
     'LICENSE',
     'README.md',
     'Rakefile',
-    'ext/llama/common.cpp',
-    'ext/llama/common.h',
     'ext/llama/extconf.rb',
-    'ext/llama/ggml.c',
-    'ext/llama/ggml.h',
-    'ext/llama/llama.cpp',
-    'ext/llama/llama.h',
-    'ext/llama/model.cpp',
     'lib/llama.rb',
     'lib/llama/model.rb',
     'lib/llama/version.rb',
@@ -42,8 +35,6 @@ Gem::Specification.new do |spec|
   spec.bindir = 'exe'
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
-
-  spec.add_dependency 'rice', '~> 4.0.4'
 
   spec.extensions = %w[ext/llama/extconf.rb]
   spec.metadata['rubygems_mfa_required'] = 'true'
