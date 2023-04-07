@@ -11,7 +11,7 @@ AllCops:
   TargetRubyVersion: 3.0
 
 Layout/LineLength:
-  Max: 120
+  Max: 100
   Severity: refactor
 
 Style/StringLiterals:
@@ -22,3 +22,6 @@ Metrics/MethodLength:
 
 Metrics/ParameterLists:
   CountKeywordArgs: false
+
+Style/DoubleNegation:
+  Enabled: false
