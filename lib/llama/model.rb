@@ -6,7 +6,7 @@ module Llama
     class ModelError < StandardError
     end
 
-    def initialize( # rubocop:disable all
+    def initialize(
       model,
       binary: default_binary,
       seed: Time.now.to_i,

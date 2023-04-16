@@ -1,27 +1,7 @@
-inherit_gem:
-  gnar-style:
-    - "rubocop/rubocop.yml"
-
 require:
   - rubocop-rake
   - rubocop-rspec
 
-AllCops:
-  NewCops: enable
-  TargetRubyVersion: 3.0
-
-Layout/LineLength:
-  Max: 100
-  Severity: refactor
-
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
-Metrics/MethodLength:
-  Max: 15
-
-Metrics/ParameterLists:
-  CountKeywordArgs: false
-
-Style/DoubleNegation:
-  Enabled: false
+inherit_gem:
+  zfletch-style:
+    - "rubocop/rubocop.yml"
